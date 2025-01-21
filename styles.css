@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Altura de la ventana gráfica */
+    margin: 0; /* Eliminar márgenes predeterminados */
+    flex-direction: column; /* Colocar el canvas y el botón en columna */
+    background: linear-gradient(45deg, #4caf50, #2196f3); /* Gradiente */
+}
+
+canvas {
+    background: #333; /* Fondo del canvas */
+    border: 5px dotted #ffffff; /* Borde de puntos */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+#reiniciarJuego {
+    display: none; /* Ocultar inicialmente */
+    margin-top: 20px; /* Espaciado desde el canvas */
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#reiniciarJuego:hover {
+    background-color: #45a049;
+}
