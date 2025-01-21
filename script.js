@@ -22,13 +22,15 @@ const millennial = {
 };
 
 const problemasArray = [
-    "VOLVER CON TUS PADRES",
+    "volver con tus padres",
+    "no permitirte terapia",
     "III Guerra mundial",
     "La vivienda",
     "tus amigos tienen hijos",
-    "El fascismo",
+    "auge del fascismo",
     "El cambio climático",
     "La depresión",
+    "ansiedad",
     "Adicción al móvil",
     "FOMO",
     "Aumento del alquiler",
