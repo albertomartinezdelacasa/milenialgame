@@ -22,6 +22,8 @@ const millennial = {
 };
 
 const problemasArray = [
+    "VOLVER CON TUS PADRES",
+    "III Guerra mundial",
     "La vivienda",
     "tus amigos tienen hijos",
     "El fascismo",
