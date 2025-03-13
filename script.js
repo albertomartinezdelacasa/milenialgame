@@ -1,5 +1,5 @@
 // Esperar a que el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', iniciarJuego);
+document.addEventListener("DOMContentLoaded", iniciarJuego);
 
 // Variables globales
 let canvas, ctx;
@@ -15,7 +15,7 @@ let juegoEnPausa = false;
 let ultimoTiempoGeneracion = 0;
 let intervaloGeneracion = 2000; // Intervalo inicial en ms
 let tiempoUltimoFrame = 0;
-let puntuacionMaxima = localStorage.getItem('puntuacionMaxima') || 0;
+let puntuacionMaxima = localStorage.getItem("puntuacionMaxima") || 0;
 // Variables para sonidos (comentadas hasta implementar)
 // let efectoSonidoColision, efectoSonidoSuperado, musicaFondo;
 
@@ -29,7 +29,8 @@ const problemasArray = [
     "auge del fascismo",
     "El cambio climático",
     "La depresión",
-    "ansiedad",
+    "Ansiedad",
+    "Los Domingos",
     "Adicción al móvil",
     "FOMO",
     "Aumento del alquiler",
@@ -38,7 +39,7 @@ const problemasArray = [
     "burnout laboral",
     "precariedad",
     "deudas",
-    "crisis de los 30"
+    "crisis de los 30",
 ];
 
 // Colores para los problemas (variedad visual)
@@ -48,7 +49,7 @@ const coloresProblemas = [
     "#900C3F", // Burdeos
     "#581845", // Morado
     "#2E86C1", // Azul
-    "#17A589"  // Verde
+    "#17A589", // Verde
 ];
 
 // Función principal para iniciar el juego
@@ -57,19 +58,19 @@ function iniciarJuego() {
     canvas = document.getElementById("gameCanvas");
     ctx = canvas.getContext("2d");
     botonReiniciar = document.getElementById("reiniciarJuego");
-    
+
     // Crear botón de pausa
     crearBotonPausa();
-    
+
     // Cargar recursos
     cargarRecursos();
-    
+
     // Configurar eventos
     configurarEventos();
-    
+
     // Inicializar configuración del juego
     inicializarConfiguracion();
-    
+
     // Iniciar el bucle del juego
     requestAnimationFrame(gameLoop);
 }
@@ -79,7 +80,7 @@ function cargarRecursos() {
     // Cargar imagen del jugador
     jugadorMilenial = new Image();
     jugadorMilenial.src = "./img/milenial.png";
-    
+
     // Cargar efectos de sonido (comentados para no romper el juego si no existen)
     /*
     // Descomentar y crear la carpeta 'sounds' con estos archivos para activar sonidos
@@ -93,18 +94,18 @@ function cargarRecursos() {
 
 // Crear botón de pausa
 function crearBotonPausa() {
-    const botonPausa = document.createElement('button');
-    botonPausa.id = 'pausarJuego';
-    botonPausa.textContent = 'Pausar';
-    botonPausa.style.position = 'absolute';
-    botonPausa.style.top = '10px';
-    botonPausa.style.right = '10px';
+    const botonPausa = document.createElement("button");
+    botonPausa.id = "pausarJuego";
+    botonPausa.textContent = "Pausar";
+    botonPausa.style.position = "absolute";
+    botonPausa.style.top = "10px";
+    botonPausa.style.right = "10px";
     document.body.appendChild(botonPausa);
-    
-    botonPausa.addEventListener('click', () => {
+
+    botonPausa.addEventListener("click", () => {
         juegoEnPausa = !juegoEnPausa;
-        botonPausa.textContent = juegoEnPausa ? 'Reanudar' : 'Pausar';
-        
+        botonPausa.textContent = juegoEnPausa ? "Reanudar" : "Pausar";
+
         // Si se reanuda el juego, actualizar el tiempo del último frame
         if (!juegoEnPausa) {
             tiempoUltimoFrame = performance.now();
@@ -117,17 +118,18 @@ function crearBotonPausa() {
 function configurarEventos() {
     // Evento para reiniciar el juego
     botonReiniciar.addEventListener("click", reiniciarJuego);
-    
+
     // Eventos de teclado
     document.addEventListener("keydown", manejarTeclado);
-    
+
     // Evento para pausar/reanudar con la tecla 'P'
     document.addEventListener("keydown", (event) => {
         if (event.code === "KeyP") {
             juegoEnPausa = !juegoEnPausa;
-            document.getElementById('pausarJuego').textContent = 
-                juegoEnPausa ? 'Reanudar' : 'Pausar';
-                
+            document.getElementById("pausarJuego").textContent = juegoEnPausa
+                ? "Reanudar"
+                : "Pausar";
+
             // Si se reanuda el juego, actualizar el tiempo del último frame
             if (!juegoEnPausa) {
                 tiempoUltimoFrame = performance.now();
@@ -146,7 +148,7 @@ function inicializarConfiguracion() {
     for (let i = 0; i < numCarriles; i++) {
         carriles.push(carrilAltura * i);
     }
-    
+
     // Configuración del millennial
     millennial = {
         x: 50,
@@ -154,14 +156,14 @@ function inicializarConfiguracion() {
         width: 50,
         height: carrilAltura - 20,
     };
-    
+
     // Reiniciar variables de juego
     activeProblems = [];
     deudaEmocional = 0;
     colisionActiva = false;
     dificultad = 0;
     juegoEnPausa = false;
-    
+
     // Iniciar música de fondo
     /*
     if (musicaFondo) {
@@ -174,7 +176,7 @@ function inicializarConfiguracion() {
 // Manejar eventos de teclado
 function manejarTeclado(event) {
     if (colisionActiva || juegoEnPausa) return;
-    
+
     if (event.code === "ArrowUp") {
         const currentIndex = carriles.indexOf(millennial.y);
         if (currentIndex > 0) {
@@ -193,9 +195,9 @@ function reiniciarJuego() {
     // Guardar puntuación máxima
     if (Math.abs(deudaEmocional) > puntuacionMaxima) {
         puntuacionMaxima = Math.abs(deudaEmocional);
-        localStorage.setItem('puntuacionMaxima', puntuacionMaxima);
+        localStorage.setItem("puntuacionMaxima", puntuacionMaxima);
     }
-    
+
     inicializarConfiguracion();
     botonReiniciar.style.display = "none";
 }
@@ -212,9 +214,11 @@ function actualizarDificultad() {
 
 // Generar un nuevo problema
 function generarProblema() {
-    const problemaAleatorio = problemasArray[Math.floor(Math.random() * problemasArray.length)];
+    const problemaAleatorio =
+        problemasArray[Math.floor(Math.random() * problemasArray.length)];
     const randomCarril = carriles[Math.floor(Math.random() * carriles.length)];
-    const colorAleatorio = coloresProblemas[Math.floor(Math.random() * coloresProblemas.length)];
+    const colorAleatorio =
+        coloresProblemas[Math.floor(Math.random() * coloresProblemas.length)];
 
     const problema = {
         text: problemaAleatorio,
@@ -223,7 +227,7 @@ function generarProblema() {
         width: 190,
         height: carrilAltura - 10,
         speed: 5 + Math.random() * 2, // Velocidad ligeramente aleatoria
-        color: colorAleatorio
+        color: colorAleatorio,
     };
     return problema;
 }
@@ -235,12 +239,12 @@ function moverProblemas(deltaTime) {
         const problema = activeProblems[i];
         // Ajustar velocidad según deltaTime para movimiento constante
         problema.x -= (problema.speed + dificultad) * (deltaTime / 16.67);
-        
+
         if (problema.x + problema.width < 0) {
             activeProblems.splice(i, 1);
             deudaEmocional -= 50; // Resta puntos si el problema se supera
             actualizarDificultad();
-            
+
             // Reproducir sonido de problema superado
             /*
             if (efectoSonidoSuperado) {
@@ -258,7 +262,7 @@ function dibujarProblemas() {
         // Dibujar rectángulo con color aleatorio
         ctx.fillStyle = problema.color;
         ctx.fillRect(problema.x, problema.y, problema.width, problema.height);
-        
+
         // Dibujar texto
         ctx.fillStyle = "#FFFFFF";
         ctx.font = "16px Arial";
@@ -287,14 +291,14 @@ function dibujarMarcador() {
     // Fondo semitransparente para el marcador
     ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
     ctx.fillRect(canvas.width - 250, 5, 245, 50);
-    
+
     // Texto del marcador
     ctx.fillStyle = "#FFFFFF";
     ctx.font = "20px Arial";
     ctx.textAlign = "right";
     ctx.fillText(`Deuda emocional: ${deudaEmocional}`, canvas.width - 10, 30);
     ctx.fillText(`Nivel: ${dificultad + 1}`, canvas.width - 10, 50);
-    
+
     // Mostrar puntuación máxima
     ctx.textAlign = "left";
     ctx.fillText(`Récord: ${puntuacionMaxima}`, 10, 30);
@@ -309,8 +313,8 @@ function mostrarMotionBlur() {
 // Mostrar mensaje final al perder
 function mostrarMensajeFinal() {
     ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
-    ctx.fillRect(canvas.width/2 - 250, canvas.height/2 - 100, 500, 200);
-    
+    ctx.fillRect(canvas.width / 2 - 250, canvas.height / 2 - 100, 500, 200);
+
     ctx.fillStyle = "#FFFFFF";
     ctx.font = "30px Arial";
     ctx.textAlign = "center";
@@ -319,14 +323,14 @@ function mostrarMensajeFinal() {
         canvas.width / 2,
         canvas.height / 2 - 40
     );
-    
+
     ctx.font = "20px Arial";
     ctx.fillText(
         `Tu deuda emocional es de ${deudaEmocional}`,
         canvas.width / 2,
         canvas.height / 2
     );
-    
+
     // Mostrar récord
     if (Math.abs(deudaEmocional) > puntuacionMaxima) {
         ctx.fillStyle = "#FFD700"; // Color dorado
@@ -363,11 +367,11 @@ function gameLoop(timestamp) {
         requestAnimationFrame(gameLoop);
         return;
     }
-    
+
     // Calcular tiempo delta para animación suave
     const deltaTime = tiempoUltimoFrame ? timestamp - tiempoUltimoFrame : 16.67;
     tiempoUltimoFrame = timestamp;
-    
+
     // Limpiar canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -418,10 +422,10 @@ function gameLoop(timestamp) {
 // Función separada para detectar colisiones
 function detectarColisiones() {
     // Usamos some() que es más eficiente ya que se detiene cuando encuentra una coincidencia
-    const hayColision = activeProblems.some(problema => {
+    const hayColision = activeProblems.some((problema) => {
         if (detectarColision(millennial, problema)) {
             colisionActiva = true;
-            
+
             // Reproducir sonido de colisión
             /*
             if (efectoSonidoColision) {
@@ -434,21 +438,21 @@ function detectarColisiones() {
                 musicaFondo.pause();
             }
             */
-            
+
             // Guardar puntuación máxima
             if (Math.abs(deudaEmocional) > puntuacionMaxima) {
                 puntuacionMaxima = Math.abs(deudaEmocional);
-                localStorage.setItem('puntuacionMaxima', puntuacionMaxima);
+                localStorage.setItem("puntuacionMaxima", puntuacionMaxima);
             }
-            
+
             setTimeout(() => {
                 mostrarMensajeFinal();
             }, 200);
-            
+
             return true; // Detener la iteración
         }
         return false;
     });
-    
+
     return hayColision;
 }
