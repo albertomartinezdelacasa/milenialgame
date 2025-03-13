@@ -1,45 +1,339 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-primary: #4caf50;
+    --color-secondary: #2196f3;
+    --color-accent: #ff4081;
+    --color-dark: #333;
+    --color-light: #ffffff;
+    --font-main: 'Courier New', monospace;
+    --font-secondary: 'Arial', sans-serif;
+    --shadow-normal: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.2);
+    --transition-speed: 0.3s;
+}
+
+/* Animación de fondo */
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Animación de título */
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px var(--color-light), 0 0 10px var(--color-light), 0 0 15px var(--color-secondary), 0 0 20px var(--color-secondary);
+    }
+    to {
+        text-shadow: 0 0 10px var(--color-light), 0 0 20px var(--color-light), 0 0 30px var(--color-secondary), 0 0 40px var(--color-secondary);
+    }
+}
+
+/* Animación para el subtítulo */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animación para los controles */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Altura de la ventana gráfica */
-    margin: 0; /* Eliminar márgenes predeterminados */
-    flex-direction: column; /* Colocar el canvas y el botón en columna */
-    background: linear-gradient(45deg, #4caf50, #2196f3); /* Gradiente */
+    min-height: 100vh;
+    margin: 0;
+    flex-direction: column;
+    background: linear-gradient(-45deg, #4caf50, #2196f3, #673ab7, #ff4081);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    font-family: var(--font-secondary);
+    color: var(--color-light);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    overflow-x: hidden;
 }
 
+/* Contenedor principal */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+}
+
+/* Canvas del juego */
 canvas {
-    background: #333; /* Fondo del canvas */
-    border: 5px dotted #ffffff; /* Borde de puntos */
-    border-radius: 10px; /* Bordes redondeados */
+    background-color: var(--color-dark);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0, 0, 0, 0.3) 1px, transparent 1px);
+    background-size: 20px 20px;
+    border: 5px dotted var(--color-light);
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+    margin: 20px 0;
+    max-width: 100%;
+    transition: transform var(--transition-speed) ease;
 }
 
+canvas:hover {
+    transform: scale(1.01);
+}
+
+/* Estilos de títulos */
 h1 {
-    font-family: monospace;
-    font-size: 70px;
+    font-family: 'VT323', var(--font-main);
+    font-size: 4.5rem;
+    margin-bottom: 5px;
+    text-align: center;
+    letter-spacing: -2px;
+    animation: glow 2s ease-in-out infinite alternate;
+    text-transform: uppercase;
+    position: relative;
+}
+
+/* Se ha eliminado la línea roja debajo del h1 */
+h1::after {
+    content: none;
 }
 
 h2 {
-    font-family: monospace;
-    font-size: 30px;
+    font-family: 'VT323', var(--font-main);
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeInUp 1s forwards 0.5s;
 }
+
 h3 {
-    font-family: monospace;
-    font-size: 20px;
+    font-family: var(--font-main);
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    text-align: center;
+    animation: pulse 2s infinite;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+/* Estilos de botones */
+button {
+    padding: 12px 24px;
+    font-size: 18px;
+    font-family: var(--font-main);
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    box-shadow: var(--shadow-normal);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: var(--transition-speed);
+    z-index: -1;
+}
+
+button:hover {
+    background-color: #45a049;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #reiniciarJuego {
-    display: none; /* Ocultar inicialmente */
-    margin-top: 20px; /* Espaciado desde el canvas */
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    display: none;
+    margin-top: 20px;
+    background-color: var(--color-accent);
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
 #reiniciarJuego:hover {
-    background-color: #45a049;
+    background-color: #e91e63;
+}
+
+#pausarJuego {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--color-secondary);
+    z-index: 10;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+#pausarJuego:hover {
+    background-color: #0b7dda;
+}
+
+/* Efectos de hover en el canvas */
+canvas:hover + #reiniciarJuego {
+    animation: pulse 1s infinite;
+}
+
+/* Media queries para diseño responsive */
+@media (max-width: 900px) {
+    body {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 700px) {
+    h1 {
+        font-size: 3rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    canvas {
+        width: 100%;
+        height: auto;
+        border-width: 3px;
+    }
+    
+    #pausarJuego {
+        top: 10px;
+        right: 10px;
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 500px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+    
+    h2 {
+        font-size: 1.2rem;
+    }
+    
+    h3 {
+        font-size: 1rem;
+        padding: 5px 10px;
+    }
+    
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+}
+
+/* Soporte para modo oscuro del sistema */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-primary: #5cba60;
+        --color-secondary: #30a5ff;
+        --color-accent: #ff5a92;
+    }
+    
+    canvas {
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+    }
+}
+
+/* Animación para cuando el juego está en pausa */
+.paused canvas {
+    filter: grayscale(70%) blur(2px);
+    opacity: 0.8;
+}
+
+/* Estilos para pantalla de fin de juego */
+.game-over canvas {
+    animation: shake 0.5s linear;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Estilos para teclas */
+.key {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+    padding: 2px 8px;
+    margin: 0 3px;
+    font-family: var(--font-main);
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: none;
+}
+
+/* Estilos para el footer */
+footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    animation: fadeInUp 1s forwards 1s;
+}
+
+footer p {
+    margin: 5px 0;
 }
